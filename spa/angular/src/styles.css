@@ -1,0 +1,8 @@
+body { font-family: system-ui, sans-serif; max-width: 48rem; margin: 0 auto; padding: 1rem; color: #222; background: #fafafa; }
+header { border-bottom: 1px solid #ddd; margin-bottom: 1rem; }
+button { font: inherit; padding: 0.5rem 1rem; border: 1px solid #333; border-radius: 4px; color: #222; background: none; cursor: pointer; }
+pre { background: #f0f0f0; padding: 0.75rem; overflow-x: auto; font-size: 0.85rem; }
+dt { font-weight: 600; }
+dd { margin: 0 0 0.5rem; overflow-wrap: anywhere; }
+.note { color: #666; font-size: 0.85rem; }
+.error { border: 1px solid #c33; background: #fff0f0; padding: 0.75rem; }

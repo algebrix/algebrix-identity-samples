@@ -1,0 +1,6 @@
+{
+  "ALGEBRIX_ISSUER": "https://auth.algebrix.co/realms/your-organization",
+  "ALGEBRIX_CLIENT_ID": "your-client-id",
+  "ALGEBRIX_REDIRECT_URI": "http://localhost:4400/callback",
+  "ALGEBRIX_POST_LOGOUT_REDIRECT_URI": "http://localhost:4400/"
+}

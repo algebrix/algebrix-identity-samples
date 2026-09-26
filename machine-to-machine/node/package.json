@@ -1,0 +1,11 @@
+{
+  "name": "algebrix-machine-to-machine-node",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env index.js"
+  },
+  "dependencies": {
+    "openid-client": "6.8.8"
+  }
+}

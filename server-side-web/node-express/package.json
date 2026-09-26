@@ -1,0 +1,13 @@
+{
+  "name": "algebrix-server-side-web-node-express",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env server.js"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "express-session": "1.19.0",
+    "openid-client": "6.8.8"
+  }
+}

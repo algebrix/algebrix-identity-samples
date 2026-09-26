@@ -1,0 +1,13 @@
+# Compiled output
+/dist
+/out-tsc
+
+# Node
+/node_modules
+npm-debug.log
+
+# Angular cache
+/.angular/cache
+
+# Local configuration with real values
+/public/config.json
