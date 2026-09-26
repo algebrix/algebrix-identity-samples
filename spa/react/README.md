@@ -60,6 +60,7 @@ Open `http://localhost:3000`.
 - **CORS or origin error in the browser console at sign-in:** `http://localhost:3000` is missing from the allowed origins, or was entered with a path.
 - **`invalid_request` about `code_challenge_method`:** the identity server refuses a single-page app's sign-in without PKCE `S256`. This sample always sends it; a changed configuration or another library may not.
 - **Clock skew:** if your computer's clock is far off, tokens look expired or not yet valid. Sync the clock.
+- **"Your session has ended. Please sign in again."** This is normal when the identity session ends, for example after the idle period or at its maximum lifetime.
 
 ## Token storage
 

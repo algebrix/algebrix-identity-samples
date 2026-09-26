@@ -11,6 +11,9 @@ import { filter, firstValueFrom } from 'rxjs';
     @if (loading()) {
       <p>Loading...</p>
     } @else if (!authenticated()) {
+      @if (sessionEnded()) {
+        <div class="info">Your session has ended. Please sign in again.</div>
+      }
       @if (error()) {
         <div class="error">{{ error() }}. See Troubleshooting in the README.</div>
       }
@@ -41,6 +44,7 @@ export class App {
   private readonly oidc = inject(OidcSecurityService);
   protected readonly loading = signal(true);
   protected readonly error = signal('');
+  protected readonly sessionEnded = signal(false);
   protected readonly authenticated = computed(() => this.oidc.authenticated().isAuthenticated);
   protected readonly claims = computed(() => this.oidc.userData().userData ?? {});
   protected readonly fields = computed(() =>
@@ -54,11 +58,10 @@ export class App {
   });
 
   constructor() {
+    const events = inject(PublicEventsService).registerForEvents();
     // Re-read the access token whenever new tokens are stored, including after each renewal.
-    inject(PublicEventsService)
-      .registerForEvents()
-      .pipe(filter((event) => event.type === EventTypes.NewAuthenticationResult))
-      .subscribe(() => this.readAccessToken());
+    events.pipe(filter((event) => event.type === EventTypes.NewAuthenticationResult)).subscribe(() => this.readAccessToken());
+    events.pipe(filter((event) => event.type === EventTypes.SilentRenewFailed)).subscribe(() => this.endSession());
     void this.start();
   }
 
@@ -83,10 +86,16 @@ export class App {
       const renewed = await firstValueFrom(this.oidc.forceRefreshSession()).catch(() => null);
       // A second checkAuth() starts the library's automatic renewal; it makes no token request.
       if (renewed?.isAuthenticated) await firstValueFrom(this.oidc.checkAuth());
-      else this.oidc.logoffLocal();
+      else this.endSession();
     }
     if (this.authenticated()) this.readAccessToken();
     this.loading.set(false);
+  }
+
+  // A failed renewal means the identity session has ended: clear the stored tokens so they are not retried.
+  private endSession() {
+    this.oidc.logoffLocal();
+    this.sessionEnded.set(true);
   }
 
   // Decoded for display only.
